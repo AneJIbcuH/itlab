@@ -1,19 +1,26 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Visitor } from "./models/models";
 import Popup from "./components/Popup";
 import Nav from "./components/Nav";
 import Head from "./components/Head";
 import MyVisitor from "./components/MyVisitor";
 import Filter from "./components/Filter";
+import { LS_VISITORS_KEY } from "./vars/const";
 import "./App.css";
 
 const App: React.FC = () => {
-  const [visitors, setVisitors] = useState<Visitor[]>([]);
+  const arr = localStorage.getItem(LS_VISITORS_KEY)
+
+  const [visitors, setVisitors] = useState<Visitor[]>(arr ? JSON.parse(arr) : []);
   const [open, setOpen] = useState<boolean>(false);
   const [visitor, setVisitor] = useState<Visitor | null>(null);
   const [filterName, setFilterName] = useState("");
   const [filterCompany, setFilterCompany] = useState("");
   const [filterState, setFilterState] = useState<boolean | 'all'>("all");
+
+  useEffect(() => {
+    localStorage.setItem(LS_VISITORS_KEY, JSON.stringify(visitors))
+  }, [visitors])
 
   function deleteVisitor(id: number, e: { stopPropagation: () => void; }) {
     e.stopPropagation();

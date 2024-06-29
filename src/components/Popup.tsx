@@ -33,11 +33,9 @@ const Popup: React.FC<Props> = ({
         el.id == visitor.id ? newVisitor : el
       );
       setVisitors(newVisitors);
-      console.log(visitors);
     } else {
       data.id = Date.now();
       setVisitors([...visitors, data]);
-      console.log(visitors);
     }
 
     reset();
